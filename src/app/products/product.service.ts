@@ -14,6 +14,12 @@ export class ProductService {
   private productsUrl = 'api/products';
   private suppliersUrl = this.supplierService.suppliersUrl;
 
+  products$ = this.http.get<Product[]>(this.productsUrl)
+    .pipe(
+      tap(data => console.log('Products: ', JSON.stringify(data))),
+      catchError(ProductService.handleError)
+    );
+
   constructor(private http: HttpClient,
               private supplierService: SupplierService) {
   }
@@ -46,13 +52,4 @@ export class ProductService {
     console.error(err);
     return throwError(errorMessage);
   }
-
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.productsUrl)
-      .pipe(
-        tap(data => console.log('Products: ', JSON.stringify(data))),
-        catchError(ProductService.handleError)
-      );
-  }
-
 }
