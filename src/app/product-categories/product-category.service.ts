@@ -2,6 +2,8 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 
 import {Observable, throwError} from 'rxjs';
+import {ProductCategory} from "./product-category";
+import {catchError, tap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,14 @@ import {Observable, throwError} from 'rxjs';
 export class ProductCategoryService {
   private productCategoriesUrl = 'api/productCategories';
 
-  constructor(private http: HttpClient) { }
+  productCategories$ = this.http.get<ProductCategory[]>(this.productCategoriesUrl)
+    .pipe(
+      tap(data => console.log('Categories', JSON.stringify(data))),
+      catchError(ProductCategoryService.handleError)
+    );
+
+  constructor(private http: HttpClient) {
+  }
 
   private static handleError(err: any): Observable<never> {
     // in a real world app, we may send the server to some remote logging infrastructure
