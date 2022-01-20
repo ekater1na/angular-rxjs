@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-import {BehaviorSubject, combineLatest, map, merge, Observable, scan, Subject, throwError} from 'rxjs';
+import {BehaviorSubject, combineLatest, map, merge, Observable, scan, shareReplay, Subject, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 
 import {Product} from './product';
@@ -33,7 +33,8 @@ export class ProductService {
         category: categories.find(c => product.categoryId === c.id).name,
         searchKey: [product.productName]
       }) as Product)
-    )
+    ),
+    shareReplay(1),
   )
 
   private productSelectedSubject = new BehaviorSubject<number>(0);
@@ -47,7 +48,8 @@ export class ProductService {
       map(([products, selectedProductId]) =>
         products.find(product => product.id === selectedProductId)
       ),
-      tap(product => console.log('selectedProduct', product))
+      tap(product => console.log('selectedProduct', product)),
+      shareReplay(1),
     )
 
   private productInsertedSubject = new Subject<Product>();
