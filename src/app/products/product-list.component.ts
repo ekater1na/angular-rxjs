@@ -6,6 +6,7 @@ import {ProductService} from './product.service';
 import {catchError} from "rxjs/operators";
 import {ProductCategory} from "../product-categories/product-category";
 import {ProductCategoryService} from "../product-categories/product-category.service";
+import {Product} from "./product";
 
 @Component({
   templateUrl: './product-list.component.html',
@@ -16,15 +17,17 @@ export class ProductListComponent {
   pageTitle = 'Product List';
   errorMessage = '';
   categories!: ProductCategory;
+
   private categorySelectedSubject = new BehaviorSubject<number>(0);
   categorySelectedAction$ = this.categorySelectedSubject.asObservable();
+
   products$ = combineLatest([
-    this.productService.productsWithCategory$,
+    this.productService.productsWithAdd$,
     this.categorySelectedAction$
   ])
     .pipe(
       map(([products, selectedCategoryId]) =>
-        products.filter(product =>
+        products.filter((product: Product) =>
           selectedCategoryId ? product.categoryId === selectedCategoryId : true
         )),
       catchError(err => {
@@ -32,6 +35,7 @@ export class ProductListComponent {
         return EMPTY;
       })
     );
+
   categories$ = this.productCategoryService.productCategories$
     .pipe(
       catchError(err => {
@@ -45,7 +49,7 @@ export class ProductListComponent {
   }
 
   onAdd(): void {
-    console.log('Not yet implemented');
+    this.productService.addProduct();
   }
 
   onSelected(categoryId: string): void {
