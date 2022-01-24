@@ -40,22 +40,22 @@ export class SupplierService {
     )
 
   constructor(private http: HttpClient) {
-    this.suppliersWithMap$
-      .subscribe(o => o.subscribe(
-        item => console.log('map result', item))
-      )
-
-    this.suppliersWithConcatMap$.subscribe(
-      item => console.log('concatMap result', item)
-    )
-
-    this.suppliersWithMergeMap$.subscribe(
-      item => console.log('mergeMap result', item)
-    )
-
-    this.suppliersWithSwitchMap$.subscribe(
-      item => console.log('switchMap result', item)
-    )
+    // this.suppliersWithMap$
+    //   .subscribe(o => o.subscribe(
+    //     item => console.log('map result', item))
+    //   )
+    //
+    // this.suppliersWithConcatMap$.subscribe(
+    //   item => console.log('concatMap result', item)
+    // )
+    //
+    // this.suppliersWithMergeMap$.subscribe(
+    //   item => console.log('mergeMap result', item)
+    // )
+    //
+    // this.suppliersWithSwitchMap$.subscribe(
+    //   item => console.log('switchMap result', item)
+    // )
   }
   private static handleError(err: any): Observable<never> {
     // in a real world app, we may send the server to some remote logging infrastructure
