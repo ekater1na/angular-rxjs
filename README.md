@@ -1,5 +1,9 @@
 # AngularRxjs
 
+[RxJS in Angular: Reactive Development](https://app.pluralsight.com/library/courses/rxjs-angular-reactive-development/table-of-contents)
+
+[GH-Pages](https://ekater1na.github.io/angular-rxjs/welcome)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
 
 ## Development server
